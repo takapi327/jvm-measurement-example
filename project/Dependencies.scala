@@ -9,4 +9,5 @@ object Dependencies {
     "http4s-ember-server"
   ).map("org.http4s" %% _ % "0.23.18")
 
+  val logback = "ch.qos.logback" % "logback-classic" % "1.4.6"
 }
