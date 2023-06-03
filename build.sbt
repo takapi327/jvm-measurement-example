@@ -3,6 +3,7 @@ import com.amazonaws.regions.{ Region, Regions }
 import ReleaseTransformations.*
 
 import BuildSettings.*
+import Dependencies.*
 
 ThisBuild / organization := "com.github.takapi327"
 ThisBuild / scalaVersion := "3.3.0"
@@ -25,6 +26,7 @@ lazy val root = (project in file("."))
       ((Compile / resourceDirectory).value / "jmx_exporter_conf.yaml") -> "conf/jmx_exporter_conf.yaml"
     ),
   )
+  .settings(libraryDependencies ++= Seq(typesafeConfig, logback) ++ http4s)
   .enablePlugins(
     JavaServerAppPackaging,
     DockerPlugin,
