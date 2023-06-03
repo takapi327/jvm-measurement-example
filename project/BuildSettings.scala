@@ -1,8 +1,23 @@
 import sbt.*
+import sbt.Keys.*
 
 import com.lightbend.sbt.javaagent.JavaAgent
 
 object BuildSettings {
+
+  val scalaSettings: Seq[String] = Seq(
+    "-Xfatal-warnings",
+    "-Wunused:all",
+    "-deprecation",
+    "-feature",
+    "-unchecked",
+    "-encoding",
+    "utf8",
+    "-language:existentials",
+    "-language:higherKinds",
+    "-language:implicitConversions"
+  )
+
   val jmxExporterJavaAgent: JavaAgent.AgentModule = {
 
     val port = 9090

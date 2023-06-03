@@ -10,7 +10,15 @@ ThisBuild / startYear    := Some(2023)
 
 lazy val root = (project in file("."))
   .settings(name := "jvm-measurement-example")
-  .settings(javaAgents ++= Seq(jmxExporterJavaAgent))
+  .settings(
+    run / fork := true,
+    scalacOptions ++= scalaSettings,
+    javaOptions ++= Seq(
+      "-Dconfig.file=conf/env.dev/application.conf",
+      "-Dlogback.configurationFile=conf/env.dev/logback.xml"
+    ),
+    javaAgents ++= Seq(jmxExporterJavaAgent)
+  )
   .settings(
     Compile / resourceDirectory := baseDirectory(_ / "conf").value,
     Universal / mappings ++= Seq(
