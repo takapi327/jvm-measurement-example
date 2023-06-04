@@ -1,0 +1,46 @@
+name: Deploy Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        type: choice
+        description: Deploy Target
+        options:
+          - jvm-server
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  jvm-server:
+    runs-on: ubuntu-latest
+
+    if: github.event.inputs.target == 'jvm-server'
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+          java-package: jdk
+          architecture: x64
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region:     ap-northeast-1
+          role-to-assume: 'arn:aws:iam::573320908463:role/deploy-github-actions'
+
+      - name: Deploy JVM Server
+        env:
+          GITHUB_USER:  ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:
+          sbt "release with-defaults"
