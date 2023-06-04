@@ -23,7 +23,9 @@ lazy val root = (project in file("."))
   .settings(
     Compile / resourceDirectory := baseDirectory(_ / "conf").value,
     Universal / mappings ++= Seq(
-      ((Compile / resourceDirectory).value / "jmx_exporter_conf.yaml") -> "conf/jmx_exporter_conf.yaml"
+      ((Compile / resourceDirectory).value / "jmx_exporter_conf.yaml") -> "conf/jmx_exporter_conf.yaml",
+      ((Compile / resourceDirectory).value / "env.stg/application.conf") -> "conf/application.conf",
+      ((Compile / resourceDirectory).value / "env.stg/logback.xml") -> "conf/logback.xml"
     ),
   )
   .settings(libraryDependencies ++= Seq(typesafeConfig, logback) ++ http4s)
