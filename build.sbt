@@ -16,7 +16,8 @@ lazy val root = (project in file("."))
     scalacOptions ++= scalaSettings,
     javaOptions ++= Seq(
       "-Dconfig.file=conf/env.dev/application.conf",
-      "-Dlogback.configurationFile=conf/env.dev/logback.xml"
+      "-Dlogback.configurationFile=conf/env.dev/logback.xml",
+      "-XX:+PrintFlagsFinal"
     ),
     javaAgents ++= Seq(jmxExporterJavaAgent)
   )
